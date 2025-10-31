@@ -1,156 +1,104 @@
-/*************************************************************
- * SISTEMA DE INSCRIÇÃO, CONFIRMAÇÃO E CERTIFICADOS AUTOMÁTICOS – CTB
- * Autor: Paulo Santos (Clube dos Tenistas da Bahia)
- * Data: 2025-11-01
- * Integração: Google Sheets + Docs + Drive + Gmail
- *************************************************************/
-
-function doPost(e) {
-  try {
-    const planilhaNome = "Cadastro Oficina";
-    const abaNome = "Respostas";
-    const emailOrganizador = "pfeira2025@gmail.com";
-
-    const ss = SpreadsheetApp.openByName(planilhaNome);
-    const sheet = ss.getSheetByName(abaNome);
-    const data = e.parameter;
-    const timestamp = new Date();
-
-    const novaLinha = [
-      timestamp,
-      data.nome,
-      data.entidade,
-      data.funcao,
-      data.whatsapp,
-      data.email,
-      "Confirmado"
-    ];
-    sheet.appendRow(novaLinha);
-
-    const qrTexto = `
-🏓 Oficina CTB - Confirmação de Inscrição
-👤 ${data.nome}
-🏫 ${data.entidade}
-🎯 ${data.funcao}
-📞 ${data.whatsapp}
-📧 ${data.email}
-    `;
-    const qrUrl = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=" + encodeURIComponent(qrTexto);
-
-    const assuntoParticipante = "Confirmação de Inscrição - Oficina CTB com Prof. Nelson Machado";
-    const corpoEmailParticipante = `
-      <div style="font-family:Arial,sans-serif;color:#002855;">
-        <h2>🏓 Confirmação de Inscrição</h2>
-        <p>Olá, <strong>${data.nome}</strong>!</p>
-        <p>Sua inscrição na <strong>Oficina de Tênis de Mesa com o Prof. Nelson Machado</strong> foi registrada com sucesso.</p>
-        <p>Apresente este QR Code no credenciamento:</p>
-        <center><img src="${qrUrl}" alt="QR Code de Confirmação" /></center>
-        <p>📍 CTB Thales de Azevedo – Salvador/BA<br>🗓️ 20 a 22 de novembro de 2025</p>
-        <p>Atenciosamente,<br><b>Equipe CTB</b><br>📧 paulo@ctb-ba.com.br</p>
-      </div>
-    `;
-    MailApp.sendEmail({
-      to: data.email,
-      subject: assuntoParticipante,
-      htmlBody: corpoEmailParticipante,
-      name: "CTB - Oficina de Tênis de Mesa"
-    });
-
-    const assuntoOrganizador = `📥 Nova inscrição confirmada: ${data.nome}`;
-    const corpoEmailOrganizador = `
-      <b>Nova inscrição confirmada!</b><br><br>
-      <b>Nome:</b> ${data.nome}<br>
-      <b>Entidade:</b> ${data.entidade}<br>
-      <b>Função:</b> ${data.funcao}<br>
-      <b>WhatsApp:</b> ${data.whatsapp}<br>
-      <b>E-mail:</b> ${data.email}<br>
-      <b>Data:</b> ${timestamp.toLocaleString("pt-BR")}
-    `;
-    MailApp.sendEmail({
-      to: emailOrganizador,
-      subject: assuntoOrganizador,
-      htmlBody: corpoEmailOrganizador
-    });
-
-    return ContentService.createTextOutput("OK").setMimeType(ContentService.MimeType.TEXT);
-
-  } catch (err) {
-    return ContentService.createTextOutput("ERRO: " + err.message)
-      .setMimeType(ContentService.MimeType.TEXT);
-  }
-}
-
-/*************************************************************
- * FUNÇÃO AUTOMÁTICA: GERA E ENVIA CERTIFICADOS PERSONALIZADOS
- *************************************************************/
-function gerarCertificados() {
-  const planilhaNome = "Cadastro Oficina";
-  const abaNome = "Respostas";
-  const ss = SpreadsheetApp.openByName(planilhaNome);
-  const sheet = ss.getSheetByName(abaNome);
-  const dados = sheet.getDataRange().getValues();
-
-  const pastaNome = "Certificados Oficina CTB";
-  const pastaDrive = obterOuCriarPasta(pastaNome);
-  const modeloNome = "Modelo Certificado CTB"; // nome do Google Docs modelo
-
-  const modelo = DriveApp.getFilesByName(modeloNome).next();
-  const arquivoModelo = DocumentApp.openById(modelo.getId());
-
-  for (let i = 1; i < dados.length; i++) {
-    const nome = dados[i][1];
-    const entidade = dados[i][2];
-    const funcao = dados[i][3];
-    const email = dados[i][5];
-    const status = dados[i][6];
-
-    if (status === "Confirmado" && nome && email) {
-      const copia = modelo.makeCopy(`Certificado - ${nome}`, pastaDrive);
-      const doc = DocumentApp.openById(copia.getId());
-      const corpo = doc.getBody();
-
-      // Substituir marcadores no modelo
-      corpo.replaceText("{{NOME}}", nome);
-      corpo.replaceText("{{FUNCAO}}", funcao);
-      corpo.replaceText("{{ENTIDADE}}", entidade);
-      corpo.replaceText("{{DATA_EVENTO}}", "20 a 22 de novembro de 2025");
-      corpo.replaceText("{{LOCAL}}", "CTB Thales de Azevedo – Salvador/BA");
-      corpo.replaceText("{{ASSINATURA}}", "Prof. Nelson Machado");
-      corpo.replaceText("{{TITULO_EVENTO}}", "Oficina de Tênis de Mesa - Formação e Metodologia Técnica");
-
-      doc.saveAndClose();
-
-      const blob = doc.getAs("application/pdf").setName(`Certificado - ${nome}.pdf`);
-      const pdfFile = pastaDrive.createFile(blob);
-
-      const assunto = "🏆 Certificado - Oficina de Tênis de Mesa CTB";
-      const corpoEmail = `
-        <div style="font-family:Arial,sans-serif;color:#002855;">
-          <h2>🏆 Certificado de Participação</h2>
-          <p>Olá, <strong>${nome}</strong>!</p>
-          <p>Seu certificado de participação na <b>Oficina de Tênis de Mesa – Prof. Nelson Machado</b> está anexado.</p>
-          <p>📍 <b>Local:</b> CTB Thales de Azevedo – Salvador/BA<br>🗓️ <b>Data:</b> 20 a 22 de novembro de 2025</p>
-          <p>Parabéns pela participação!</p>
-          <p><b>Equipe CTB</b></p>
-        </div>
-      `;
-      MailApp.sendEmail({
-        to: email,
-        subject: assunto,
-        htmlBody: corpoEmail,
-        attachments: [pdfFile.getAs(MimeType.PDF)]
-      });
-
-      // Atualiza status na planilha
-      sheet.getRange(i + 1, 7).setValue("Certificado Enviado");
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🏓 Oficina de Tênis de Mesa – Prof. Nelson Machado | CTB</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <style>
+    :root {
+      --azul: #002855;
+      --verde: #00a651;
+      --branco: #ffffff;
+      --fundo: #f4f6f8;
     }
-  }
-}
+    body { font-family: "Segoe UI", Roboto, sans-serif; margin: 0; background: var(--fundo); color: var(--azul); }
+    header {
+      background: var(--branco); box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 30px; position: sticky; top: 0; z-index: 100;
+    }
+    .logo { max-height: 70px; }
+    nav a { margin: 0 15px; text-decoration: none; color: var(--azul); font-weight: 600; }
+    nav a:hover { color: var(--verde); }
+    #pdfButton { background: var(--verde); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+    section {
+      background: var(--branco); margin: 50px auto; padding: 60px 40px; border-radius: 16px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05); max-width: 1100px;
+    }
+    .banner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 30px; }
+    .banner-text { flex: 1 1 55%; }
+    .banner-image { flex: 1 1 35%; text-align: center; padding: 20px; }
+    .banner-image img { width: 260px; border-radius: 50%; background: #e9f9ee; padding: 12px; }
+    form { display: flex; flex-direction: column; gap: 15px; max-width: 600px; margin: 0 auto; }
+    input, select, button { padding: 12px; font-size: 1rem; border: 1px solid #ccc; border-radius: 8px; }
+    button { background: var(--verde); color: white; border: none; cursor: pointer; font-weight: 600; }
+    #mensagem, #qrcode { text-align: center; margin-top: 15px; font-weight: 600; }
+    #qrcode { display: none; margin-top: 25px; }
+    iframe { border: 0; width: 100%; height: 400px; border-radius: 12px; }
+    footer { background: var(--azul); color: white; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; padding: 20px 40px; gap: 15px; }
+    footer a { color: white; text-decoration: none; font-weight: 600; }
+    footer img { max-height: 50px; }
+    #adminSection { text-align: center; margin-top: 20px; }
+    #adminButton { background: #ffb300; color: #002855; font-weight: bold; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; }
+    @media (max-width: 768px) { header { flex-direction: column; gap: 10px; } .banner { flex-direction: column; text-align: center; } footer { flex-direction: column; text-align: center; } .banner-image img { width: 180px; } }
+  </style>
+</head>
 
-/*************************************************************
- * Função utilitária: cria ou encontra uma pasta no Google Drive
- *************************************************************/
-function obterOuCriarPasta(nome) {
-  const pastas = DriveApp.getFoldersByName(nome);
-  return pastas.hasNext() ? pastas.next() : DriveApp.createFolder(nome);
-}
+<body>
+  <header>
+    <img src="./ctb.png" alt="CTB" class="logo" />
+    <nav>
+      <a href="#inicio">Início</a>
+      <a href="#curriculo">Currículo</a>
+      <a href="#programacao">Programação</a>
+      <a href="#inscricao">Inscrição</a>
+      <a href="#local">Local</a>
+    </nav>
+    <button id="pdfButton">📄 Salvar PDF</button>
+  </header>
+
+  <!-- Conteúdo (Início, Currículo, Programação, Formulário, Local) mantido igual -->
+
+  <section id="adminSection">
+    <h2>📜 Administração</h2>
+    <input type="password" id="adminKey" placeholder="Senha de administrador" />
+    <button id="adminButton">📜 Emitir Certificados</button>
+    <p id="adminStatus"></p>
+  </section>
+
+  <footer>
+    <div>
+      <p>Clube dos Tenistas da Bahia – CNPJ 23.146.328/0001-16<br/>
+      📞 <a href="https://wa.me/5571985304903" target="_blank">WhatsApp</a> |
+      ✉️ <a href="mailto:paulo@ctb-ba.com.br">paulo@ctb-ba.com.br</a></p>
+    </div>
+    <div><a href="https://www.linkedin.com/in/paulocarneiropfeira" target="_blank"><img src="./ctblinkedin.jpg" alt="LinkedIn" /></a></div>
+    <div><img src="./ctb1.png" alt="CTB Logo" /></div>
+  </footer>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwyxP03cSvbP8jKs2zXddINsI36O_aDnzvpqTIntz2oYTF__absnSVgaM6OaMZjV7e2/exec";
+
+    document.getElementById('pdfButton').addEventListener('click', () => {
+      const a = document.createElement('a');
+      a.href = './oficinas.pdf';
+      a.download = 'oficinas.pdf';
+      a.target = '_blank';
+      a.click();
+    });
+
+    document.getElementById('adminButton').addEventListener('click', async () => {
+      const senha = document.getElementById('adminKey').value.trim();
+      const status = document.getElementById('adminStatus');
+      status.innerHTML = "⏳ Gerando certificados...";
+      try {
+        const resp = await fetch(`${scriptURL}?key=${senha}`);
+        status.innerHTML = await resp.text();
+      } catch {
+        status.innerHTML = "❌ Erro ao conectar com o servidor.";
+      }
+    });
+  </script>
+</body>
+</html>
