@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🏓 Oficina de Tênis de Mesa – Prof. Nelson Machado | CTB</title>
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
   <style>
@@ -14,8 +14,8 @@
     }
     body {
       font-family: "Segoe UI", Roboto, sans-serif;
-      margin: 0;
       background: var(--fundo);
+      margin: 0;
       color: var(--azul);
     }
     header {
@@ -46,7 +46,6 @@
       border-radius: 6px;
       cursor: pointer;
       font-weight: 600;
-      transition: background 0.3s;
     }
     #pdfButton:hover { background: #008f4f; }
     section {
@@ -232,7 +231,7 @@
   </footer>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbwc1i2C-Q-7gpne2jYMTQH3xnCOjfcJiywunNJ9ccMxFUnpX1P7ju-CwJ-qDs37IrN8/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxsKXI4ChWYNt-q4V808J4LaVYHseT39uRVugCBjN62UsKex7LGJnsGwpWHCfSTPJXe/exec";
 
     // Botão PDF
     document.getElementById('pdfButton').addEventListener('click', () => {
@@ -243,7 +242,7 @@
       link.click();
     });
 
-    // Formulário
+    // Envio do formulário
     const form = document.getElementById('inscricaoForm');
     const msg = document.getElementById('mensagem');
     const qrContainer = document.getElementById('qrcode');
