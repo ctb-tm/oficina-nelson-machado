@@ -17,9 +17,7 @@
       margin: 0;
       background: var(--fundo);
       color: var(--azul);
-      scroll-behavior: smooth;
     }
-
     header {
       background: var(--branco);
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -51,7 +49,6 @@
       transition: background 0.3s;
     }
     #pdfButton:hover { background: #008f4f; }
-
     section {
       background: var(--branco);
       margin: 50px auto;
@@ -60,11 +57,8 @@
       box-shadow: 0 3px 10px rgba(0,0,0,0.05);
       max-width: 1100px;
     }
-
     h1, h2, h3 { text-align: center; color: var(--azul); }
-    ul { margin-left: 25px; line-height: 1.7; }
-    p { line-height: 1.7; }
-
+    p, ul { line-height: 1.7; }
     .banner {
       display: flex;
       flex-wrap: wrap;
@@ -81,7 +75,6 @@
       padding: 12px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
-
     form {
       display: flex;
       flex-direction: column;
@@ -89,14 +82,12 @@
       max-width: 600px;
       margin: 0 auto;
     }
-
     input, select, button {
       padding: 12px;
       font-size: 1rem;
       border: 1px solid #ccc;
       border-radius: 8px;
     }
-
     button {
       background: var(--verde);
       color: white;
@@ -106,25 +97,21 @@
       transition: background 0.3s;
     }
     button:hover { background: #008f4f; }
-
     #mensagem, #qrcode {
       text-align: center;
       margin-top: 15px;
       font-weight: 600;
     }
-
     #qrcode {
       display: none;
       margin-top: 25px;
     }
-
     iframe {
       border: 0;
       width: 100%;
       height: 400px;
       border-radius: 12px;
     }
-
     footer {
       background: var(--azul);
       color: white;
@@ -138,7 +125,6 @@
     footer a { color: white; text-decoration: none; font-weight: 600; }
     footer img { max-height: 50px; }
     footer .centro img { border-radius: 8px; max-height: 60px; }
-
     @media (max-width: 768px) {
       header { flex-direction: column; gap: 10px; }
       .banner { flex-direction: column; text-align: center; }
@@ -246,9 +232,9 @@
   </footer>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbw4ZVj9rMQtyd6Mngy7ghA7sfCLdKTGRQZ1rhd4cbymNTVnLXbZQhjWfznsx52NROA7/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzh1WE6rZDLrDHcf_EcuN_wkg5l7IsHlrIvBKPJ0e1Y_K5R8E9GQNfuO_35bSiSk8_l/exec";
 
-    // PDF download
+    // PDF button
     document.getElementById('pdfButton').addEventListener('click', () => {
       const link = document.createElement('a');
       link.href = './oficinas.pdf';
@@ -291,7 +277,7 @@
           }
         })
         .catch(() => {
-          msg.innerHTML = "❌ Erro de conexão. Tente novamente.";
+          msg.innerHTML = "❌ Erro de conexão. Verifique se o script está público.";
           msg.style.color = "red";
         });
     });
