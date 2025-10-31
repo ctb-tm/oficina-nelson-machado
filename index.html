@@ -232,7 +232,7 @@
   </footer>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyK_mUwLLrwwo1Sze79xg3vBIvRs0T7aTw9UVV7wU6T2AB98hUcmT0fg8TiHRXr2Efb/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwc1i2C-Q-7gpne2jYMTQH3xnCOjfcJiywunNJ9ccMxFUnpX1P7ju-CwJ-qDs37IrN8/exec";
 
     // Botão PDF
     document.getElementById('pdfButton').addEventListener('click', () => {
@@ -275,6 +275,8 @@
             const canvas = qrContainer.querySelector("canvas");
             const link = canvas.toDataURL("image/png");
             downloadBtn.href = link;
+            const nomeArquivo = `Comprovante_${data.get("nome").replace(/\s+/g,"_")}_${new Date().toISOString().split('T')[0]}.png`;
+            downloadBtn.download = nomeArquivo;
             downloadDiv.style.display = "block";
           }, 1000);
           form.reset();
