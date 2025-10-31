@@ -246,7 +246,7 @@
   </footer>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyazmruXoXYnLMc-WtcIG8IrbOesDampHkAjgWtpePh9Cia_cKHQrEjfXoOObNpHK0L/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbw4ZVj9rMQtyd6Mngy7ghA7sfCLdKTGRQZ1rhd4cbymNTVnLXbZQhjWfznsx52NROA7/exec";
 
     // PDF download
     document.getElementById('pdfButton').addEventListener('click', () => {
@@ -265,6 +265,8 @@
     form.addEventListener('submit', e => {
       e.preventDefault();
       const data = new FormData(form);
+      msg.innerHTML = "⏳ Enviando inscrição...";
+      msg.style.color = "#444";
       fetch(scriptURL, { method: 'POST', body: data })
         .then(res => res.text())
         .then(text => {
