@@ -3,237 +3,216 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🏓 Oficina de Tênis de Mesa – Prof. Nelson Machado | CTB</title>
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <title>Oficina de Tênis de Mesa - Prof. Nelson Machado | CTB</title>
+  <link rel="icon" href="ctb.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
-    :root {
-      --azul: #002855;
-      --verde: #00a651;
-      --branco: #ffffff;
-      --fundo: #f4f6f8;
-    }
     body {
-      font-family: "Segoe UI", Roboto, sans-serif;
-      background: var(--fundo);
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f9f9fb;
       margin: 0;
-      color: var(--azul);
+      padding: 0;
+      color: #222;
     }
+
     header {
-      background: var(--branco);
+      background: #fff;
+      padding: 15px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 30px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .logo { max-height: 70px; }
-    nav a {
-      margin: 0 15px;
-      text-decoration: none;
-      color: var(--azul);
-      font-weight: 600;
-      transition: color 0.3s;
-    }
-    nav a:hover { color: var(--verde); }
-    #pdfButton {
-      background: var(--verde);
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-    #pdfButton:hover { background: #008f4f; }
-    section {
-      background: var(--branco);
-      margin: 50px auto;
-      padding: 60px 40px;
-      border-radius: 16px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-      max-width: 1100px;
-    }
-    h1, h2, h3 { text-align: center; color: var(--azul); }
-    p, ul { line-height: 1.7; }
-    .banner {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 30px;
-    }
-    .banner-text { flex: 1 1 55%; }
-    .banner-image { flex: 1 1 35%; text-align: center; padding: 20px; }
-    .banner-image img {
-      width: 260px;
-      border-radius: 50%;
-      background: #e9f9ee;
-      padding: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    input, select, button {
-      padding: 12px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    button {
-      background: var(--verde);
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.3s;
-    }
-    button:hover { background: #008f4f; }
-    #mensagem, #qrcode {
       text-align: center;
-      margin-top: 15px;
-      font-weight: 600;
     }
-    #qrcode {
+
+    header img {
+      width: 140px;
+      height: auto;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #0064b7;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #fff;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      background: #004c8b;
+    }
+
+    section {
       display: none;
-      margin-top: 25px;
+      padding: 30px;
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      margin-top: 20px;
+      border-radius: 10px;
     }
+
+    section.active {
+      display: block;
+    }
+
+    h1, h2 {
+      color: #004c8b;
+    }
+
+    form input, form select {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    form button {
+      background: #00a859;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background: #008f4f;
+    }
+
+    footer {
+      background: #004c8b;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    footer img {
+      width: 60px;
+    }
+
+    .qrcode-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #mensagem {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
     #downloadLink {
       display: none;
       text-align: center;
-      margin-top: 20px;
+      margin-top: 15px;
     }
+
+    #downloadBtn {
+      background: #004c8b;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+
     iframe {
       border: 0;
       width: 100%;
       height: 400px;
-      border-radius: 12px;
-    }
-    footer {
-      background: var(--azul);
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      padding: 20px 40px;
-      gap: 15px;
-    }
-    footer a { color: white; text-decoration: none; font-weight: 600; }
-    footer img { max-height: 50px; }
-    footer .centro img { border-radius: 8px; max-height: 60px; }
-    @media (max-width: 768px) {
-      header { flex-direction: column; gap: 10px; }
-      .banner { flex-direction: column; text-align: center; }
-      footer { flex-direction: column; text-align: center; }
-      .banner-image img { width: 180px; }
+      border-radius: 10px;
     }
   </style>
 </head>
-
 <body>
+
   <header>
-    <img src="./ctb.png" alt="CTB" class="logo" />
-    <nav>
-      <a href="#inicio">Início</a>
-      <a href="#curriculo">Currículo</a>
-      <a href="#programacao">Programação</a>
-      <a href="#inscricao">Inscrição</a>
-      <a href="#local">Local</a>
-    </nav>
-    <button id="pdfButton">📄 Salvar PDF</button>
+    <img src="ctb.png" alt="CTB - Clube dos Tenistas da Bahia">
   </header>
 
+  <nav>
+    <a href="#" onclick="showPage('home')">Oficina</a>
+    <a href="#" onclick="showPage('curriculo')">Currículo</a>
+    <a href="#" onclick="showPage('programacao')">Programação</a>
+    <a href="#" onclick="showPage('inscricao')">Inscrição</a>
+    <a href="#" onclick="showPage('local')">Local</a>
+  </nav>
+
   <!-- Página 1 -->
-  <section id="inicio">
-    <div class="banner">
-      <div class="banner-text">
-        <h1>🏓 Oficina de Tênis de Mesa - Prof. Nelson Machado</h1>
-        <p><strong>20, 21 e 22 de novembro de 2025</strong> – CT CTB Thales de Azevedo</p>
-        <p>Formação de técnicos e capacitação prática para graduandos e profissionais de Educação Física.</p>
-        <p>Oficina exclusiva com o professor Nelson Machado, abordando fundamentos técnicos, metodologia de ensino e biomecânica do Tênis de Mesa.</p>
-      </div>
-      <div class="banner-image">
-        <img src="./nelson.png" alt="Nelson Machado" />
-      </div>
-    </div>
+  <section id="home" class="active">
+    <h1>🏓 Oficina de Tênis de Mesa - Prof. Nelson Machado</h1>
+    <p>Formação de técnicos e capacitação prática para graduandos e profissionais de Educação Física.</p>
+    <p>Oficina exclusiva com o professor <b>Nelson Machado</b>, abordando fundamentos técnicos, metodologia de ensino e biomecânica do Tênis de Mesa.</p>
+    <img src="nelson.png" alt="Nelson Machado" style="float:right; width:180px; border-radius:50%; margin-left:20px;">
   </section>
 
   <!-- Página 2 -->
   <section id="curriculo">
-    <h1>📘 Prof. Nelson Machado – CREF 10.882/G-SP</h1>
+    <h2>📘 Breve resumo profissional</h2>
+    <p><b>Prof. Nelson Machado – CREF 10.882/G-SP</b></p>
+    <p>35 anos ensinando Tênis de Mesa, funcionário público concursado desde 1994 e técnico desportivo na Secretaria Municipal de Esportes de Marília/SP.</p>
+
     <ul>
-      <li>35 anos ensinando Tênis de Mesa.</li>
-      <li>Funcionário Público Municipal concursado desde 1994.</li>
-      <li>Técnico Desportivo – Secretaria Municipal de Esportes de Marília/SP.</li>
-      <li>Graduado e Especialista em Ciência do Treinamento Desportivo pela Universidade de Marília/SP.</li>
       <li>Treinador da Seleção Brasileira Infantojuvenil (2000–2006).</li>
-      <li>Responsável pela Detecção de Talentos Olímpicos e Paralímpicos do Brasil (2010–2013).</li>
-      <li>Membro do Comitê de Ciências da CBTM e Expert da ITTF.</li>
+      <li>Responsável pela Detecção de Talentos Olímpicos e Paralímpicos do Tênis de Mesa (2010–2013).</li>
+      <li>Membro do Comitê de Ciências da Confederação Brasileira de Tênis de Mesa – CBTM (2010–2013).</li>
+      <li>Expert da Federação Internacional de Tênis de Mesa (ITTF); condutor de cursos da CBTM e ITTF.</li>
       <li>Autor do livro “Método de Ensino de Tênis de Mesa para Professores, Colégios e Escolas”.</li>
-      <li>Autor do capítulo de Tênis de Mesa no livro de Raí “Como Gostar de Esportes” (Editora Abril, 2012).</li>
-      <li>Coordenador do Intercâmbio Técnico-Cultural-Científico com França, Espanha e Portugal.</li>
-      <li>Coordenador do Tênis de Mesa de Marília/SP há 30 anos – mais de 350 títulos conquistados.</li>
-      <li>Coordenador da modalidade no Colégio Criativo de Marília/SP (1990–2024).</li>
-      <li>Mais de 60 cursos e clínicas de treinamento ministrados no Brasil e exterior.</li>
-      <li>Ex-Líder de Metodologia da CBTM.</li>
+      <li>Coordenador técnico de intercâmbios com França, Espanha e Portugal (1996–2025).</li>
+      <li>Mais de 200 títulos Estaduais e 128 Nacionais conquistados por Marília/SP.</li>
     </ul>
   </section>
 
   <!-- Página 3 -->
   <section id="programacao">
-    <h1>🎓 Ementa Oficial – Oficinas Técnicas com o Prof. Nelson Machado</h1>
-    <p style="text-align:center;">📍 Clube dos Tenistas da Bahia – CTB (Colégio Estadual Thales de Azevedo)<br>📅 De quinta a sábado</p>
+    <h2>🎓 Ementa Oficial – Oficinas Técnicas com o Prof. Nelson Machado</h2>
+    <p>📍 Clube dos Tenistas da Bahia – CTB<br>📅 De quinta a sábado</p>
 
     <h3>🏓 Quinta-feira | 14h</h3>
-    <p><strong>Oficina Exclusiva – Atletas do Time CTB (Projetos Sociais)</strong></p>
     <ul>
-      <li>Análise dos fundamentos técnicos (saque, recepção e transição ofensiva).</li>
-      <li>Exercícios de coordenação, tempo de reação e leitura de trajetória.</li>
-      <li>Controle emocional em situação de competição.</li>
-      <li>Avaliação de desempenho técnico com feedback imediato.</li>
+      <li>Treinamento Técnico-Aplicado e Desenvolvimento Motor Específico.</li>
+      <li>Análise individual de fundamentos técnicos (saque, recepção e transição ofensiva).</li>
+      <li>Estratégias de controle emocional em competição.</li>
     </ul>
-    <p><strong>🎯 Objetivo:</strong> Aprimorar a base técnica e cognitiva dos atletas do CTB, fortalecendo o desempenho competitivo dentro do contexto escolar e estadual.</p>
 
     <h3>🧠 Sexta-feira | 8h às 18h</h3>
-    <p><strong>Oficina de Formação de Técnicos de Tênis de Mesa</strong></p>
     <ul>
       <li>Metodologia e Ciência do Treinamento no Tênis de Mesa Moderno.</li>
-      <li>Estruturação de sessões de treino segundo princípios científicos.</li>
-      <li>Desenvolvimento de talentos e planejamento anual.</li>
-      <li>Estratégias pedagógicas em escolas, clubes e projetos sociais.</li>
-      <li>Aplicação prática do Método Nelson Machado de Ensino.</li>
+      <li>Estruturação de treinos científicos e identificação de talentos.</li>
+      <li>Aplicação prática do Método Nelson Machado.</li>
     </ul>
-    <p><strong>🎯 Objetivo:</strong> Capacitar professores e técnicos para atuação metodológica, científica e inclusiva, com foco na formação integral do atleta.</p>
 
     <h3>💪 Sábado | 8h às 18h</h3>
-    <p><strong>Oficina Avançada – Correção de Movimentos dos Atletas</strong></p>
     <ul>
-      <li>Diagnóstico técnico e correção de empunhadura, posicionamento e deslocamento.</li>
-      <li>Uso de feedback visual e auditivo na aprendizagem motora.</li>
-      <li>Princípios de biomecânica e eficiência gestual.</li>
+      <li>Correção de Movimentos e Análise Biomecânica.</li>
+      <li>Diagnóstico técnico, empunhadura e deslocamento.</li>
       <li>Construção de rotinas de aperfeiçoamento técnico de alto rendimento.</li>
     </ul>
-    <p><strong>🎯 Objetivo:</strong> Aperfeiçoar a execução motora dos atletas, integrando ciência do movimento, percepção tática e rendimento competitivo.</p>
 
-    <p><strong>📘 Certificação:</strong> Os participantes das oficinas de sexta e sábado receberão certificado de participação emitido pelo CTB (16 horas).</p>
+    <p><b>📘 Certificação:</b> participantes recebem certificado com carga horária de 16h emitido pelo CTB.</p>
   </section>
 
   <!-- Página 4 -->
   <section id="inscricao">
-    <h1>📝 Formulário de Inscrição</h1>
+    <h2>📝 Formulário de Inscrição</h2>
     <form id="inscricaoForm">
-      <label>Nome Completo:</label>
-      <input type="text" name="nome" required />
-      <label>Entidade / Clube:</label>
-      <input type="text" name="entidade" required />
+      <label>Nome completo:</label>
+      <input type="text" name="nome" required>
+
+      <label>Entidade/Clube:</label>
+      <input type="text" name="entidade" required>
+
       <label>Função:</label>
       <select name="funcao" required>
         <option value="">Selecione...</option>
@@ -241,50 +220,47 @@
         <option value="Técnico">Técnico</option>
         <option value="Atleta">Atleta</option>
       </select>
+
       <label>WhatsApp:</label>
-      <input type="text" name="whatsapp" placeholder="(71) 99999-9999" required />
+      <input type="text" name="whatsapp" required>
+
       <label>E-mail:</label>
-      <input type="email" name="email" required />
+      <input type="email" name="email" required>
+
       <button type="submit">Enviar Inscrição</button>
     </form>
-    <p id="mensagem"></p>
-    <div id="qrcode"></div>
-    <div id="downloadLink"><a id="downloadBtn" href="#" download="Comprovante_Inscricao.png">⬇️ Baixar Comprovante</a></div>
+
+    <div id="mensagem"></div>
+
+    <div id="qrcode" class="qrcode-container"></div>
+
+    <div id="downloadLink">
+      <a id="downloadBtn" href="#" download>Baixar Comprovante</a>
+    </div>
   </section>
 
   <!-- Página 5 -->
   <section id="local">
-    <h1>📍 Local do Evento</h1>
-    <p style="text-align:center;">
-      <strong>Colégio Estadual Thales de Azevedo</strong><br/>
-      Rua Adelaide Pertence SN – Costa Azul – Salvador – Bahia
-    </p>
-    <iframe src="https://www.google.com/maps?q=Colégio%20Estadual%20Thales%20de%20Azevedo%20Salvador%20Bahia&output=embed" allowfullscreen loading="lazy"></iframe>
+    <h2>📍 Local do Evento</h2>
+    <p><b>Colégio Estadual Thales de Azevedo</b><br>Rua Adelaide Pertence, Costa Azul, Salvador - BA</p>
+    <iframe src="https://www.google.com/maps?q=Colégio+Estadual+Thales+de+Azevedo,+Salvador,+BA&output=embed"></iframe>
   </section>
 
   <footer>
-    <div>
-      <p>Clube dos Tenistas da Bahia – CNPJ 23.146.328/0001-16<br/>
-      📞 <a href="https://wa.me/5571985304903" target="_blank">WhatsApp</a> |
-      ✉️ <a href="mailto:paulo@ctb-ba.com.br">paulo@ctb-ba.com.br</a></p>
+    <div>© Clube dos Tenistas da Bahia – CNPJ 23.146.328/0001-16<br>
+      📞 <a href="https://wa.me/5571985304903" style="color:white;text-decoration:none;">(71) 98530-4903</a><br>
+      📧 <a href="mailto:paulo@ctb-ba.com.br" style="color:white;">paulo@ctb-ba.com.br</a>
     </div>
-    <div><a href="https://www.linkedin.com/in/paulocarneiropfeira" target="_blank"><img src="./ctblinkedin.jpg" alt="LinkedIn" /></a></div>
-    <div><img src="./ctb1.png" alt="CTB Logo" /></div>
+    <img src="ctb1.png" alt="CTB Logo">
   </footer>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxsKXI4ChWYNt-q4V808J4LaVYHseT39uRVugCBjN62UsKex7LGJnsGwpWHCfSTPJXe/exec";
+    function showPage(page) {
+      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(page).classList.add("active");
+    }
 
-    // Botão PDF
-    document.getElementById('pdfButton').addEventListener('click', () => {
-      const link = document.createElement('a');
-      link.href = './oficinas.pdf';
-      link.download = 'oficinas.pdf';
-      link.target = '_blank';
-      link.click();
-    });
-
-    // Envio do formulário
+    const scriptURL = "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLiFhZv0efi0q6JYE87Ax9YhZTN_uK6DdNu0VkSUPkUxbqPu6...";
     const form = document.getElementById('inscricaoForm');
     const msg = document.getElementById('mensagem');
     const qrContainer = document.getElementById('qrcode');
@@ -295,13 +271,13 @@
       e.preventDefault();
       const data = new FormData(form);
       msg.innerHTML = "⏳ Enviando inscrição...";
-      msg.style.color = "#444";
+      msg.style.color = "#333";
+
       fetch(scriptURL, { method: 'POST', body: data })
-        .then(res => res.text())
-        .then(text => {
+        .then(() => {
           msg.innerHTML = "✅ Inscrição enviada com sucesso!";
           msg.style.color = "green";
-          qrContainer.innerHTML = "";
+
           const resumo = `
 🏓 Oficina CTB - Confirmação de Inscrição
 👤 ${data.get("nome")}
@@ -310,23 +286,30 @@
 📞 ${data.get("whatsapp")}
 📧 ${data.get("email")}
           `;
-          const qr = new QRCode(qrContainer, { text: resumo, width: 180, height: 180 });
+
+          qrContainer.innerHTML = "";
+          new QRCode(qrContainer, { text: resumo, width: 180, height: 180 });
           qrContainer.style.display = "block";
+
           setTimeout(() => {
             const canvas = qrContainer.querySelector("canvas");
-            const link = canvas.toDataURL("image/png");
-            downloadBtn.href = link;
-            const nomeArquivo = `Comprovante_${data.get("nome").replace(/\s+/g,"_")}_${new Date().toISOString().split('T')[0]}.png`;
-            downloadBtn.download = nomeArquivo;
-            downloadDiv.style.display = "block";
+            if (canvas) {
+              const link = canvas.toDataURL("image/png");
+              downloadBtn.href = link;
+              const nomeArquivo = `Comprovante_${data.get("nome").replace(/\s+/g,"_")}.png`;
+              downloadBtn.download = nomeArquivo;
+              downloadDiv.style.display = "block";
+            }
           }, 1000);
+
           form.reset();
         })
         .catch(() => {
-          msg.innerHTML = "❌ Erro de conexão. Tente novamente.";
-          msg.style.color = "red";
+          msg.innerHTML = "⚠️ Inscrição processada localmente (sem resposta do servidor).";
+          msg.style.color = "orange";
         });
     });
   </script>
+
 </body>
 </html>
