@@ -139,26 +139,6 @@
     footer img { max-height: 50px; }
     footer .centro img { border-radius: 8px; max-height: 60px; }
 
-    #adminSection {
-      text-align: center;
-      margin-top: 20px;
-      padding: 20px;
-      background: #f0f3f7;
-      border-radius: 10px;
-      max-width: 700px;
-      margin: 50px auto;
-    }
-    #adminButton {
-      background: #ffb300;
-      color: #002855;
-      font-weight: bold;
-      padding: 10px 20px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-    }
-    #adminButton:hover { background: #ff9800; }
-
     @media (max-width: 768px) {
       header { flex-direction: column; gap: 10px; }
       .banner { flex-direction: column; text-align: center; }
@@ -265,19 +245,10 @@
     <div><img src="./ctb1.png" alt="CTB Logo" /></div>
   </footer>
 
-  <!-- Administração -->
-  <section id="adminSection">
-    <h2>📜 Administração</h2>
-    <p>Área restrita do organizador CTB.</p>
-    <input type="password" id="adminKey" placeholder="Senha de administrador" />
-    <button id="adminButton">📜 Emitir Certificados</button>
-    <p id="adminStatus"></p>
-  </section>
-
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbwR7J-OBJpYCv-laDBvY7ItxfK4WIz2JD3bvlDXRKd10AWDbLiWPA3l8WJGmeIHOXJN/exec";
 
-    // PDF
+    // PDF download
     document.getElementById('pdfButton').addEventListener('click', () => {
       const link = document.createElement('a');
       link.href = './oficinas.pdf';
@@ -286,7 +257,7 @@
       link.click();
     });
 
-    // Formulário
+    // Form submission
     const form = document.getElementById('inscricaoForm');
     const msg = document.getElementById('mensagem');
     const qrContainer = document.getElementById('qrcode');
@@ -321,19 +292,6 @@
           msg.innerHTML = "❌ Erro de conexão. Tente novamente.";
           msg.style.color = "red";
         });
-    });
-
-    // Administração
-    document.getElementById('adminButton').addEventListener('click', async () => {
-      const senha = document.getElementById('adminKey').value.trim();
-      const status = document.getElementById('adminStatus');
-      status.innerHTML = "⏳ Gerando certificados...";
-      try {
-        const resp = await fetch(`${scriptURL}?key=${senha}`);
-        status.innerHTML = await resp.text();
-      } catch {
-        status.innerHTML = "❌ Erro ao conectar com o servidor.";
-      }
     });
   </script>
 </body>
