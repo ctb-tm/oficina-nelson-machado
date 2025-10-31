@@ -308,6 +308,7 @@
   </footer>
 
   <script>
+    // Botão para baixar PDF existente
     document.getElementById('pdfButton').addEventListener('click', () => {
       const link = document.createElement('a');
       link.href = './oficinas.pdf';
@@ -316,7 +317,8 @@
       link.click();
     });
 
-    const scriptURL = "https://script.google.com/macros/s/AKfycbwd6V9v67Bqvge4Lr5dI_7eKdNwWe8WxFMkp7Q85WkF2-FQrNyjFHeaxl6KIc6-Rxbr/exec";
+    // Google Apps Script (novo código)
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxoI-Yywi6y8mrv-HSLnQp74EKyzCl2vP8E-KVTTjbE_xeBLgRf27VyVqtGtH7WP0RG/exec";
     const form = document.getElementById('inscricaoForm');
     const msg = document.getElementById('mensagem');
     const qrContainer = document.getElementById('qrcode');
@@ -334,24 +336,31 @@
       }
 
       fetch(scriptURL, { method: 'POST', body: data })
-        .then(() => {
-          msg.innerHTML = "✅ Inscrição enviada com sucesso!";
-          msg.style.color = "green";
+        .then(response => response.text())
+        .then(text => {
+          if (text.trim() === "OK") {
+            msg.innerHTML = "✅ Inscrição enviada com sucesso!";
+            msg.style.color = "green";
 
-          qrContainer.innerHTML = "";
-          const resumo = `
+            // Geração automática do QR Code
+            qrContainer.innerHTML = "";
+            const resumo = `
 🏓 Oficina CTB - Confirmação de Inscrição
 👤 ${data.get("nome")}
 🏫 ${data.get("entidade")}
 🎯 ${data.get("funcao")}
 📞 ${data.get("whatsapp")}
 📧 ${data.get("email")}
-          `;
-          new QRCode(qrContainer, { text: resumo, width: 180, height: 180 });
-          qrContainer.style.display = "block";
+            `;
+            new QRCode(qrContainer, { text: resumo, width: 180, height: 180 });
+            qrContainer.style.display = "block";
+          } else {
+            msg.innerHTML = "❌ Erro ao enviar inscrição. " + text;
+            msg.style.color = "red";
+          }
         })
         .catch(() => {
-          msg.innerHTML = "❌ Erro ao enviar inscrição. Tente novamente.";
+          msg.innerHTML = "❌ Erro ao enviar inscrição. Verifique sua conexão.";
           msg.style.color = "red";
         });
 
