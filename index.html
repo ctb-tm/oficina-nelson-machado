@@ -106,6 +106,11 @@
       display: none;
       margin-top: 25px;
     }
+    #downloadLink {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
     iframe {
       border: 0;
       width: 100%;
@@ -178,12 +183,6 @@
   <section id="programacao">
     <h1>🎓 Ementa Oficial – Oficinas Técnicas com o Prof. Nelson Machado</h1>
     <p style="text-align:center;">📍 Clube dos Tenistas da Bahia – CTB<br/>📅 De quinta a sábado</p>
-    <h3>🏓 Quinta-feira | 14h</h3>
-    <ul><li>Treinamento Técnico-Aplicado e Desenvolvimento Motor</li></ul>
-    <h3>🧠 Sexta-feira | 8h às 18h</h3>
-    <ul><li>Metodologia e Ciência do Treinamento no Tênis de Mesa Moderno</li></ul>
-    <h3>💪 Sábado | 8h às 18h</h3>
-    <ul><li>Correção de Movimentos e Análise Biomecânica Aplicada</li></ul>
   </section>
 
   <!-- Página 4 -->
@@ -209,6 +208,7 @@
     </form>
     <p id="mensagem"></p>
     <div id="qrcode"></div>
+    <div id="downloadLink"><a id="downloadBtn" href="#" download="Comprovante_Inscricao.png">⬇️ Baixar Comprovante de Inscrição</a></div>
   </section>
 
   <!-- Página 5 -->
@@ -232,9 +232,9 @@
   </footer>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbzh1WE6rZDLrDHcf_EcuN_wkg5l7IsHlrIvBKPJ0e1Y_K5R8E9GQNfuO_35bSiSk8_l/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyK_mUwLLrwwo1Sze79xg3vBIvRs0T7aTw9UVV7wU6T2AB98hUcmT0fg8TiHRXr2Efb/exec";
 
-    // PDF button
+    // Botão PDF
     document.getElementById('pdfButton').addEventListener('click', () => {
       const link = document.createElement('a');
       link.href = './oficinas.pdf';
@@ -243,10 +243,12 @@
       link.click();
     });
 
-    // Form submission
+    // Formulário
     const form = document.getElementById('inscricaoForm');
     const msg = document.getElementById('mensagem');
     const qrContainer = document.getElementById('qrcode');
+    const downloadDiv = document.getElementById('downloadLink');
+    const downloadBtn = document.getElementById('downloadBtn');
 
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -256,28 +258,29 @@
       fetch(scriptURL, { method: 'POST', body: data })
         .then(res => res.text())
         .then(text => {
-          if (text.trim() === "OK") {
-            msg.innerHTML = "✅ Inscrição enviada com sucesso!";
-            msg.style.color = "green";
-            qrContainer.innerHTML = "";
-            const resumo = `
+          msg.innerHTML = "✅ Inscrição enviada com sucesso!";
+          msg.style.color = "green";
+          qrContainer.innerHTML = "";
+          const resumo = `
 🏓 Oficina CTB - Confirmação de Inscrição
 👤 ${data.get("nome")}
 🏫 ${data.get("entidade")}
 🎯 ${data.get("funcao")}
 📞 ${data.get("whatsapp")}
 📧 ${data.get("email")}
-            `;
-            new QRCode(qrContainer, { text: resumo, width: 180, height: 180 });
-            qrContainer.style.display = "block";
-            form.reset();
-          } else {
-            msg.innerHTML = "❌ Erro ao enviar inscrição: " + text;
-            msg.style.color = "red";
-          }
+          `;
+          const qr = new QRCode(qrContainer, { text: resumo, width: 180, height: 180 });
+          qrContainer.style.display = "block";
+          setTimeout(() => {
+            const canvas = qrContainer.querySelector("canvas");
+            const link = canvas.toDataURL("image/png");
+            downloadBtn.href = link;
+            downloadDiv.style.display = "block";
+          }, 1000);
+          form.reset();
         })
         .catch(() => {
-          msg.innerHTML = "❌ Erro de conexão. Verifique se o script está público.";
+          msg.innerHTML = "❌ Erro de conexão. Tente novamente.";
           msg.style.color = "red";
         });
     });
