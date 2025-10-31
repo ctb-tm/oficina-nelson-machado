@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Oficina de Tênis de Mesa – Nelson Machado | CTB</title>
+
   <style>
-    /* --- ESTILO CLEAN WEB 3.0 --- */
     :root {
       --azul: #002855;
       --verde: #00a651;
@@ -21,24 +21,21 @@
       scroll-behavior: smooth;
     }
 
+    /* --- CABEÇALHO --- */
     header {
       background: var(--branco);
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      text-align: center;
-      padding: 15px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 30px;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
     }
 
-    header img {
-      max-height: 80px;
-      display: block;
-      margin: 0 auto 10px;
-    }
-
-    nav {
-      margin-bottom: 10px;
+    .logo {
+      max-height: 70px;
     }
 
     nav a {
@@ -46,35 +43,55 @@
       text-decoration: none;
       color: var(--azul);
       font-weight: 600;
-      transition: color 0.3s;
     }
 
     nav a:hover {
       color: var(--verde);
     }
 
+    #pdfButton {
+      background: var(--verde);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    #pdfButton:hover {
+      background: #008f4f;
+    }
+
+    /* --- SEÇÕES --- */
     section {
-      padding: 60px 20px;
-      margin: 40px auto;
-      width: 90%;
-      max-width: 1000px;
       background: var(--branco);
+      margin: 50px auto;
+      padding: 60px 40px;
       border-radius: 16px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      max-width: 1100px;
     }
 
-    h1, h2, h3 {
-      color: var(--azul);
-      margin-bottom: 10px;
-    }
-
-    h1 {
-      font-size: 2rem;
+    h1, h2 {
       text-align: center;
-      margin-bottom: 30px;
+      color: var(--azul);
     }
 
-    /* --- SEÇÃO BANNER --- */
+    h3 {
+      color: var(--verde);
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      margin-left: 20px;
+    }
+
+    /* --- BANNER --- */
     .banner {
       display: flex;
       flex-wrap: wrap;
@@ -87,33 +104,26 @@
       flex: 1 1 55%;
     }
 
-    .banner-text p {
-      font-size: 1.1rem;
-      margin: 8px 0;
-    }
-
     .banner-image {
       flex: 1 1 35%;
       text-align: center;
+      padding: 20px;
     }
 
     .banner-image img {
-      width: 220px;
+      width: 250px;
       border-radius: 50%;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      padding: 10px;
+      background: #e9f9ee;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
 
-    /* --- SEÇÃO CURRÍCULO / PROGRAMAÇÃO --- */
-    ul {
-      line-height: 1.7;
-    }
-
-    /* --- SEÇÃO FORMULÁRIO --- */
+    /* --- FORMULÁRIO --- */
     form {
       display: flex;
       flex-direction: column;
       gap: 15px;
-      max-width: 500px;
+      max-width: 600px;
       margin: 0 auto;
     }
 
@@ -145,18 +155,20 @@
 
     footer {
       text-align: center;
-      padding: 20px;
+      padding: 30px;
       font-size: 0.9rem;
       color: #777;
       background: var(--branco);
       box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
-      margin-top: 60px;
     }
 
     @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+      }
       .banner {
         flex-direction: column;
-        text-align: center;
       }
       .banner-image img {
         width: 180px;
@@ -167,24 +179,24 @@
 
 <body>
   <header>
-    <img src="imagens/ctb.png" alt="CTB" />
+    <img src="imagens/ctb.png" alt="CTB" class="logo" />
     <nav>
       <a href="#inicio">Início</a>
       <a href="#curriculo">Currículo</a>
       <a href="#programacao">Programação</a>
       <a href="#inscricao">Inscrição</a>
     </nav>
+    <button id="pdfButton">📄 Salvar PDF</button>
   </header>
 
-  <!-- Página 1: Banner -->
+  <!-- Página 1 -->
   <section id="inicio">
     <div class="banner">
       <div class="banner-text">
-        <h1>Oficina com Nelson Machado</h1>
-        <p>Profissional de Educação Física e ex-coordenador da Seleção Brasileira de Tênis de Mesa</p>
-        <p><strong>20, 21 e 22 de novembro de 2025</strong></p>
-        <p><strong>Local:</strong> CT CTB Thales de Azevedo</p>
-        <p>Formação de técnico para graduandos e profissionais de Educação Física</p>
+        <h1>Oficina Técnica com Nelson Machado</h1>
+        <p><strong>20, 21 e 22 de novembro de 2025</strong> – CT CTB Thales de Azevedo</p>
+        <p>Formação de técnicos e capacitação prática para graduandos e profissionais de Educação Física.</p>
+        <p>Oficina exclusiva com o professor Nelson Machado, abordando fundamentos técnicos, metodologia de ensino e biomecânica do Tênis de Mesa.</p>
       </div>
       <div class="banner-image">
         <img src="imagens/nelson.png" alt="Nelson Machado">
@@ -192,38 +204,47 @@
     </div>
   </section>
 
-  <!-- Página 2: Currículo -->
+  <!-- Página 2 -->
   <section id="curriculo">
-    <h1>Currículo – Nelson Machado</h1>
-    <p><strong>Prof. Nelson Machado – CREF 10.882/G-SP</strong></p>
+    <h1>Currículo Profissional – Nelson Machado</h1>
+    <h3>Experiência e Contribuição Técnica</h3>
     <ul>
-      <li>35 anos ensinando Tênis de Mesa.</li>
-      <li>Graduado em Educação Física pela Universidade de Marília/SP (1993).</li>
-      <li>Especialista em Ciência do Treinamento Desportivo (1997).</li>
+      <li>35 anos de experiência no ensino e treinamento de Tênis de Mesa.</li>
       <li>Treinador da Seleção Brasileira Infantojuvenil (2000–2006).</li>
-      <li>Responsável pela Detecção de Talentos Olímpicos e Paralímpicos da CBTM (2010–2013).</li>
-      <li>Autor do livro “Método de Ensino de Tênis de Mesa para Professores e Escolas”.</li>
-      <li>Mais de 60 cursos e clínicas ministrados no Brasil e no exterior.</li>
+      <li>Especialista em Ciência do Treinamento Desportivo – Universidade de Marília/SP.</li>
+      <li>Autor do livro <em>“Método de Ensino de Tênis de Mesa”</em> (português e espanhol).</li>
+      <li>Coordenador técnico em intercâmbios internacionais Brasil–Portugal e Brasil–Espanha.</li>
+      <li>Referência nacional em metodologia de formação de técnicos e atletas.</li>
+      <li>Ministrou mais de 60 clínicas e cursos em todo o Brasil.</li>
     </ul>
   </section>
 
-  <!-- Página 3: Programação -->
+  <!-- Página 3 -->
   <section id="programacao">
-    <h1>Programação da Oficina</h1>
+    <h1>Programação Oficial da Oficina</h1>
+    <h3>📅 Quinta-feira | 14h</h3>
+    <p>Oficina exclusiva – Atletas do CTB: Treinamento técnico e motor aplicado com foco em fundamentos específicos.</p>
 
-    <h2>📅 Quinta-feira | 14h</h2>
-    <p><strong>Oficina exclusiva – Atletas CTB:</strong> Treinamento técnico e motor específico.</p>
+    <h3>📅 Sexta-feira | 8h às 18h</h3>
+    <p>Formação de Técnicos de Tênis de Mesa: metodologia moderna e ciência do treinamento.</p>
+    <ul>
+      <li>Estruturação de sessões de treino e controle de carga.</li>
+      <li>Planejamento anual e desenvolvimento de talentos.</li>
+      <li>Práticas pedagógicas e gestão de equipes esportivas.</li>
+    </ul>
 
-    <h2>📅 Sexta-feira | 8h às 18h</h2>
-    <p><strong>Formação de Técnicos de Tênis de Mesa:</strong> metodologia e ciência do treinamento.</p>
+    <h3>📅 Sábado | 8h às 18h</h3>
+    <p>Oficina Avançada – Correção de Movimentos e Análise Biomecânica Aplicada.</p>
+    <ul>
+      <li>Diagnóstico técnico e correção individualizada.</li>
+      <li>Uso de feedback visual na aprendizagem motora.</li>
+      <li>Rotinas de aperfeiçoamento técnico para atletas de alto rendimento.</li>
+    </ul>
 
-    <h2>📅 Sábado | 8h às 18h</h2>
-    <p><strong>Oficina Avançada:</strong> Correção de movimentos e análise biomecânica aplicada.</p>
-
-    <p><strong>Certificação:</strong> 16 horas emitidas pelo CTB.</p>
+    <p><strong>Certificação:</strong> 16 horas emitidas pelo CTB para participantes das oficinas de sexta e sábado.</p>
   </section>
 
-  <!-- Página 4: Formulário -->
+  <!-- Página 4 -->
   <section id="inscricao">
     <h1>Formulário de Inscrição</h1>
     <form id="inscricaoForm">
@@ -243,7 +264,6 @@
 
       <button type="submit">Enviar Inscrição</button>
     </form>
-
     <p id="mensagem"></p>
   </section>
 
@@ -252,6 +272,16 @@
   </footer>
 
   <script>
+    // BOTÃO PARA BAIXAR O PDF EXISTENTE
+    document.getElementById('pdfButton').addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.href = 'oficinas.pdf'; // Caminho do arquivo existente
+      link.download = 'oficinas.pdf';
+      link.target = '_blank';
+      link.click();
+    });
+
+    // FORMULÁRIO GOOGLE APPS SCRIPT
     const scriptURL = "https://script.google.com/macros/s/AKfycbwd6V9v67Bqvge4Lr5dI_7eKdNwWe8WxFMkp7Q85WkF2-FQrNyjFHeaxl6KIc6-Rxbr/exec";
     const form = document.getElementById('inscricaoForm');
     const msg = document.getElementById('mensagem');
