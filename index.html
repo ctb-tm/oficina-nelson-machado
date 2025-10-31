@@ -48,7 +48,9 @@
       border-radius: 6px;
       cursor: pointer;
       font-weight: 600;
+      transition: background 0.3s;
     }
+    #pdfButton:hover { background: #008f4f; }
 
     section {
       background: var(--branco);
@@ -194,23 +196,19 @@
     </div>
   </section>
 
-  <!-- Página 2 - Currículo -->
+  <!-- Página 2 -->
   <section id="curriculo">
     <h1>📘 Breve Resumo Profissional</h1>
     <ul>
       <li>Treinador da Seleção Brasileira Infantojuvenil (2000–2006).</li>
-      <li>Responsável pela Detecção de Talentos Olímpicos e Paralímpicos do Tênis de Mesa do Brasil (2010–2013).</li>
-      <li>Membro do Comitê de Ciências da Confederação Brasileira de Tênis de Mesa – CBTM (2010–2013).</li>
-      <li>Membro e Expert da Federação Internacional de Tênis de Mesa (ITTF); condutor de cursos da CBTM e ITTF.</li>
-      <li>Autor do livro “Método de Ensino de Tênis de Mesa para Professores, Colégios e Escolas” – obra presente na América Latina, Europa e África.</li>
-      <li>Autor do capítulo de Tênis de Mesa no livro de Raí “Como Gostar de Esportes” – Editora Abril (2012).</li>
-      <li>Coordenador do Intercâmbio Técnico-Cultural-Científico com França, Espanha e Portugal.</li>
-      <li>Coordenador do Tênis de Mesa de Marília/SP há 30 anos, com 9 títulos Sul-Americanos, 10 Latino-Americanos, 128 Nacionais e mais de 200 Estaduais.</li>
-      <li>Ministrou mais de 60 cursos e clínicas de treinamento no Brasil e no exterior.</li>
+      <li>Responsável pela Detecção de Talentos Olímpicos e Paralímpicos (2010–2013).</li>
+      <li>Membro do Comitê de Ciências da CBTM (2010–2013) e Expert da ITTF.</li>
+      <li>Autor de livros e metodologias aplicadas no Brasil e no exterior.</li>
+      <li>Coordenador do Tênis de Mesa de Marília/SP há 30 anos, com centenas de títulos.</li>
     </ul>
   </section>
 
-  <!-- Página 3 - Programação -->
+  <!-- Página 3 -->
   <section id="programacao">
     <h1>🎓 Ementa Oficial – Oficinas Técnicas com o Prof. Nelson Machado</h1>
     <p style="text-align:center;">📍 Clube dos Tenistas da Bahia – CTB<br/>📅 De quinta a sábado</p>
@@ -222,7 +220,7 @@
     <ul><li>Correção de Movimentos e Análise Biomecânica Aplicada</li></ul>
   </section>
 
-  <!-- Página 4 - Formulário -->
+  <!-- Página 4 -->
   <section id="inscricao">
     <h1>📝 Formulário de Inscrição</h1>
     <form id="inscricaoForm">
@@ -247,14 +245,14 @@
     <div id="qrcode"></div>
   </section>
 
-  <!-- Página 5 - Local -->
+  <!-- Página 5 -->
   <section id="local">
     <h1>📍 Local do Evento</h1>
     <p style="text-align:center;">
       <strong>Colégio Estadual Thales de Azevedo</strong><br/>
       Rua Adelaide Pertence SN – Costa Azul – Salvador – Bahia
     </p>
-    <iframe src="https://www.google.com/maps?q=Col%C3%A9gio%20Estadual%20Thales%20de%20Azevedo%20Salvador%20Bahia&output=embed" allowfullscreen loading="lazy"></iframe>
+    <iframe src="https://www.google.com/maps?q=Colégio%20Estadual%20Thales%20de%20Azevedo%20Salvador%20Bahia&output=embed" allowfullscreen loading="lazy"></iframe>
   </section>
 
   <footer>
@@ -279,7 +277,7 @@
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbwyxP03cSvbP8jKs2zXddINsI36O_aDnzvpqTIntz2oYTF__absnSVgaM6OaMZjV7e2/exec";
 
-    // Botão PDF
+    // PDF
     document.getElementById('pdfButton').addEventListener('click', () => {
       const link = document.createElement('a');
       link.href = './oficinas.pdf';
@@ -297,7 +295,7 @@
       e.preventDefault();
       const data = new FormData(form);
       fetch(scriptURL, { method: 'POST', body: data })
-        .then(response => response.text())
+        .then(res => res.text())
         .then(text => {
           if (text.trim() === "OK") {
             msg.innerHTML = "✅ Inscrição enviada com sucesso!";
