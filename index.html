@@ -161,46 +161,40 @@
   <section id="curriculo">
     <h2>📘 Breve resumo profissional</h2>
     <p><b>Prof. Nelson Machado – CREF 10.882/G-SP</b></p>
-    <p>35 anos ensinando Tênis de Mesa, funcionário público concursado desde 1994 e técnico desportivo na Secretaria Municipal de Esportes de Marília/SP.</p>
+    <p>35 anos ensinando Tênis de Mesa, técnico desportivo da Secretaria de Esportes de Marília/SP e ex-coordenador da Seleção Brasileira.</p>
 
     <ul>
       <li>Treinador da Seleção Brasileira Infantojuvenil (2000–2006).</li>
-      <li>Responsável pela Detecção de Talentos Olímpicos e Paralímpicos do Tênis de Mesa (2010–2013).</li>
-      <li>Membro do Comitê de Ciências da Confederação Brasileira de Tênis de Mesa – CBTM (2010–2013).</li>
-      <li>Expert da Federação Internacional de Tênis de Mesa (ITTF); condutor de cursos da CBTM e ITTF.</li>
+      <li>Responsável pela Detecção de Talentos Olímpicos e Paralímpicos (2010–2013).</li>
+      <li>Membro do Comitê de Ciências da CBTM (2010–2013).</li>
       <li>Autor do livro “Método de Ensino de Tênis de Mesa para Professores, Colégios e Escolas”.</li>
-      <li>Coordenador técnico de intercâmbios com França, Espanha e Portugal (1996–2025).</li>
-      <li>Mais de 200 títulos Estaduais e 128 Nacionais conquistados por Marília/SP.</li>
+      <li>Coordenador de intercâmbios técnicos com França, Espanha e Portugal (1996–2025).</li>
+      <li>Mais de 200 títulos estaduais e 128 nacionais conquistados.</li>
     </ul>
   </section>
 
   <!-- Página 3 -->
   <section id="programacao">
-    <h2>🎓 Ementa Oficial – Oficinas Técnicas com o Prof. Nelson Machado</h2>
-    <p>📍 Clube dos Tenistas da Bahia – CTB<br>📅 De quinta a sábado</p>
+    <h2>🎓 Ementa Oficial – Oficinas Técnicas</h2>
+    <p>📍 Clube dos Tenistas da Bahia – CTB | 📅 20 a 22 de novembro de 2025</p>
 
     <h3>🏓 Quinta-feira | 14h</h3>
     <ul>
       <li>Treinamento Técnico-Aplicado e Desenvolvimento Motor Específico.</li>
-      <li>Análise individual de fundamentos técnicos (saque, recepção e transição ofensiva).</li>
-      <li>Estratégias de controle emocional em competição.</li>
+      <li>Exercícios de coordenação e leitura de trajetória.</li>
     </ul>
 
     <h3>🧠 Sexta-feira | 8h às 18h</h3>
     <ul>
       <li>Metodologia e Ciência do Treinamento no Tênis de Mesa Moderno.</li>
-      <li>Estruturação de treinos científicos e identificação de talentos.</li>
       <li>Aplicação prática do Método Nelson Machado.</li>
     </ul>
 
     <h3>💪 Sábado | 8h às 18h</h3>
     <ul>
-      <li>Correção de Movimentos e Análise Biomecânica.</li>
-      <li>Diagnóstico técnico, empunhadura e deslocamento.</li>
-      <li>Construção de rotinas de aperfeiçoamento técnico de alto rendimento.</li>
+      <li>Correção de Movimentos e Análise Biomecânica Aplicada.</li>
+      <li>Construção de rotinas de alto rendimento.</li>
     </ul>
-
-    <p><b>📘 Certificação:</b> participantes recebem certificado com carga horária de 16h emitido pelo CTB.</p>
   </section>
 
   <!-- Página 4 -->
@@ -261,6 +255,7 @@
     }
 
     const scriptURL = "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLiFhZv0efi0q6JYE87Ax9YhZTN_uK6DdNu0VkSUPkUxbqPu6...";
+
     const form = document.getElementById('inscricaoForm');
     const msg = document.getElementById('mensagem');
     const qrContainer = document.getElementById('qrcode');
@@ -274,41 +269,41 @@
       msg.style.color = "#333";
 
       fetch(scriptURL, { method: 'POST', body: data })
-        .then(() => {
-          msg.innerHTML = "✅ Inscrição enviada com sucesso!";
-          msg.style.color = "green";
-
-          const resumo = `
-🏓 Oficina CTB - Confirmação de Inscrição
-👤 ${data.get("nome")}
-🏫 ${data.get("entidade")}
-🎯 ${data.get("funcao")}
-📞 ${data.get("whatsapp")}
-📧 ${data.get("email")}
-          `;
-
-          qrContainer.innerHTML = "";
-          new QRCode(qrContainer, { text: resumo, width: 180, height: 180 });
-          qrContainer.style.display = "block";
-
-          setTimeout(() => {
-            const canvas = qrContainer.querySelector("canvas");
-            if (canvas) {
-              const link = canvas.toDataURL("image/png");
-              downloadBtn.href = link;
-              const nomeArquivo = `Comprovante_${data.get("nome").replace(/\s+/g,"_")}.png`;
-              downloadBtn.download = nomeArquivo;
-              downloadDiv.style.display = "block";
-            }
-          }, 1000);
-
-          form.reset();
-        })
-        .catch(() => {
-          msg.innerHTML = "⚠️ Inscrição processada localmente (sem resposta do servidor).";
-          msg.style.color = "orange";
-        });
+        .then(() => showQRCode(data, "✅ Inscrição enviada com sucesso!", "green"))
+        .catch(() => showQRCode(data, "⚠️ Inscrição processada localmente (sem resposta do servidor).", "orange"));
     });
+
+    function showQRCode(data, mensagem, cor) {
+      msg.innerHTML = mensagem;
+      msg.style.color = cor;
+
+      const resumo = `
+🏓 Oficina CTB - Confirmação de Inscrição
+👤 Nome: ${data.get("nome")}
+🏫 Clube: ${data.get("entidade")}
+🎯 Função: ${data.get("funcao")}
+📞 WhatsApp: ${data.get("whatsapp")}
+📧 Email: ${data.get("email")}
+📅 Registro: ${new Date().toLocaleString("pt-BR")}
+      `;
+
+      qrContainer.innerHTML = "";
+      new QRCode(qrContainer, { text: resumo.trim(), width: 200, height: 200 });
+      qrContainer.style.display = "block";
+
+      setTimeout(() => {
+        const canvas = qrContainer.querySelector("canvas");
+        if (canvas) {
+          const link = canvas.toDataURL("image/png");
+          downloadBtn.href = link;
+          const nomeArquivo = `Comprovante_${data.get("nome").replace(/\s+/g,"_")}.png`;
+          downloadBtn.download = nomeArquivo;
+          downloadDiv.style.display = "block";
+        }
+      }, 1200);
+
+      form.reset();
+    }
   </script>
 
 </body>
